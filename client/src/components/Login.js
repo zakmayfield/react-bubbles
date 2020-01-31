@@ -22,6 +22,16 @@ class Login extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     console.log('log in button clicked!')
+
+    axios.post('http://localhost:5000/api/login', this.state.credentials)
+      .then(res => {
+        //res.data.payload = token
+        console.log(res)
+        localStorage.setItem('TOKEN', res.data.payload)
+      })
+      .catch(err => {
+        console.log(err)
+      })
   }
 
   render() {
@@ -39,7 +49,7 @@ class Login extends React.Component {
           />
 
           <input
-            type="text"
+            type="password"
             name="password"
             placeholder="Password"
             value={this.state.credentials.password}
