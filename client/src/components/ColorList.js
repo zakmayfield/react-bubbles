@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from 'axios'
 import { axiosWithAuth } from '../utils/axiosWithAuth';
 
@@ -20,16 +20,16 @@ const ColorList = ({ colors, updateColors }) => {
 
   const saveEdit = e => {
     e.preventDefault();
-
-    axios.put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
+    axiosWithAuth().put(`/api/colors/${colorToEdit.id}`, colorToEdit)
       .then(res => {
         console.log(res)
-        updateColors(res.data);
         setColorToEdit(initialColor);
+        window.location.reload();
       })
       .catch(err => {
         console.log(err)
       })
+    console.log(colorToEdit) // logs the selected colors object with the properties listed (works as thought)
   };
 
   const deleteColor = color => {
